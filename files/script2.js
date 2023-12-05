@@ -39,9 +39,13 @@ opentype.load(fontPath, (err, font) => {
     }
 
     const svgContainer = document.createElement("div");
+    svgContainer.id = "svg-container"
 
+    // dodanie ramki
+    svgElement.setAttribute("style", "border:1px dashed red")
+    
     svgContainer.appendChild(svgElement);
-    svgContainer.style.border = "1px dashed red";
+    // svgContainer.style.border = "1px dashed red";
     document.body.appendChild(svgContainer);
 
     // optymalizacja wymiarów svg
