@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            /*background-color: aquamarine;*/
+        }
+    </style>
+</head>
+<body>
+<svg id="my-svg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+    <circle id="my-circle" cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="7" />
+</svg>
+<script>
+    // console.log("script");
+    // const svg = document.getElementById('my-svg');
+    // const circle = document.getElementById('my-circle');
+    //
+    // // Tworzenie wzorca tekstury
+    // const pattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern');
+    // pattern.setAttribute('id', 'texture');
+    // pattern.setAttribute('width', '20');
+    // pattern.setAttribute('height', '20');
+    // pattern.setAttribute('patternUnits', 'userSpaceOnUse');
+    //
+    // const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    // image.setAttribute('xlink:href', '645188.jpg'); // Ścieżka do pliku tekstury
+    // image.setAttribute('width', '20');
+    // image.setAttribute('height', '20');
+    //
+    // pattern.appendChild(image);
+    //
+    // // Ustawienie tekstury na obiekcie SVG
+    // circle.setAttribute('fill', 'url(#texture)');
+    //
+    // // Dodanie wzorca do elementu <defs> w SVG
+    // const defs = svg.querySelector('defs') || svg.insertBefore(document.createElementNS('http://www.w3.org/2000/svg', 'defs'), svg.firstChild);
+    // defs.appendChild(pattern);
+    
+    // -----------------
+
+    const svg = document.getElementById('my-svg');
+    const circle = document.getElementById('my-circle');
+
+    // Tworzenie wzorca tekstury
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    const pattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern');
+    pattern.setAttribute('id', 'texture');
+    pattern.setAttribute('width', '100%');
+    pattern.setAttribute('height', '100%');
+    const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    image.setAttribute('href', '645188.jpg'); // Ścieżka do pliku tekstury
+    image.setAttribute('width', '20');
+    image.setAttribute('height', '20');
+    pattern.appendChild(image);
+    defs.appendChild(pattern);
+    svg.appendChild(defs);
+
+    // Ustawienie tekstury na obiekcie SVG
+    circle.setAttribute('fill', 'url(#texture)');
+</script>
+</body>
+</html>
