@@ -154,6 +154,8 @@ const createText = async () => {
     // console.log("bbox", bbox);
     const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(" ");
     svgElement.setAttribute("viewBox", viewBox);
+    
+    console.log(bbox.width, bbox.height);
 };
 
 document.addEventListener('keydown', async ({key}) => {
@@ -164,7 +166,6 @@ document.addEventListener('keydown', async ({key}) => {
     } else if (key === 'Enter') {
         text = `${text}\n`;
     } else {
-        console.log(key);
         return;
     }
 
