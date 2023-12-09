@@ -133,7 +133,7 @@ opentype.load(fontPath, (err, font) => {
 
     const svgContainer = document.createElement("div");
     svgContainer.id = "svg-container"
-    svgContainer.style = "width: 50%"; // TODO: Poprawić
+    svgContainer.style = "width: 50%; margin: 0 auto; transform: translateY(20%);"; // TODO: Poprawić
 
     // dodanie ramki
     svgElement.setAttribute("style", "border:1px dashed red")
