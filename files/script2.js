@@ -72,11 +72,11 @@ opentype.load(fontPath, (err, font) => {
     // svgElement.setAttribute('width', totalWidth.toString());
     // svgElement.setAttribute('height', fontSize.toString());
 
-    let x = 0;
+    let textWidth = 0;
     const paths = [];
     for (const char of text) {
         const glyph = font.charToGlyph(char);
-        const pathData = glyph.getPath(x, fontSize, fontSize);
+        const pathData = glyph.getPath(textWidth, fontSize, fontSize);
         const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         paths.push(svgPath);
         svgPath.setAttribute('d', pathData.toPathData());
@@ -84,7 +84,7 @@ opentype.load(fontPath, (err, font) => {
         // https://stackoverflow.com/questions/18580389/svg-transparent-background-web
         // svgPath.setAttribute('fill',"none");
         svgElement.appendChild(svgPath);
-        x += glyph.advanceWidth * (fontSize / font.unitsPerEm);
+        textWidth += glyph.advanceWidth * (fontSize / font.unitsPerEm);
     }
 
     const svgContainer = document.createElement("div");
