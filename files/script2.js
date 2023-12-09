@@ -19,8 +19,53 @@ opentype.load(fontPath, (err, font) => {
         totalWidth += glyph.advanceWidth * (fontSize / font.unitsPerEm);
     }
 
+    // ----------------------------
+    const createSvgImage = () => {
+        // Utwórz obiekt SVGImageElement
+        const svgImg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+
+        // Ustaw atrybut 'href' dla obiektu SVGImageElement
+        svgImg.setAttributeNS(
+            'http://www.w3.org/1999/xlink',
+            'href',
+            'https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg');
+
+        // Dodaj dodatkowe atrybuty (jeśli są potrzebne)
+        svgImg.setAttribute('x', '0');
+        svgImg.setAttribute('y', '0');
+        svgImg.setAttribute('width', '100');
+        svgImg.setAttribute('height', '100');
+
+        return svgImg;
+    };
+    const svgImage = createSvgImage();
+    
+    const myPattern = 'myPattern';
+    const createSvgPattern = (svgImg) => {
+        // Utwórz obiekt SVGPatternElement
+        const svgPattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern');
+
+        // Ustaw atrybuty dla obiektu SVGPatternElement
+        svgPattern.setAttribute('id', myPattern); // Ustaw unikalne ID dla wzoru
+        svgPattern.setAttribute('x', '0'); // Pozycja X wzoru
+        svgPattern.setAttribute('y', '0'); // Pozycja Y wzoru
+        svgPattern.setAttribute('width', '100'); // Szerokość wzoru
+        svgPattern.setAttribute('height', '100'); // Wysokość wzoru
+        svgPattern.setAttribute('patternUnits', 'userSpaceOnUse'); // Jednostki dla wzoru
+
+        // Dodaj utworzony obraz do obiektu SVGPatternElement
+        svgPattern.appendChild(svgImage);
+        
+        return svgPattern;
+    };
+    
+    const svgPattern = createSvgPattern(svgImage);
+
+    // ----------------------------
+    
     // Utwórz obiekt SVG o dostosowanych wymiarach
     const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svgElement.appendChild(svgPattern);
     // svgElement.setAttribute('width', totalWidth.toString());
     // svgElement.setAttribute('height', fontSize.toString());
 
@@ -32,6 +77,7 @@ opentype.load(fontPath, (err, font) => {
         const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         paths.push(svgPath);
         svgPath.setAttribute('d', pathData.toPathData());
+        svgPath.setAttribute('fill', `url(#${myPattern})`);
         // https://stackoverflow.com/questions/18580389/svg-transparent-background-web
         // svgPath.setAttribute('fill',"none");
         svgElement.appendChild(svgPath);
