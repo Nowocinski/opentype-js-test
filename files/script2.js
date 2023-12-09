@@ -3,8 +3,12 @@ import opentype from "opentype.js";
 // Ścieżka do pliku TTF
 const fontPath = '../fonts/Comic Sans MS Bold.ttf';
 const fontSize = 72; // TODO: Bez znaczenia :/
-const text = `æåÂÆ
-123`;
+const text = `
+
+
+123
+æÃÆ`; // TODO: Poprawić pustę spację
+const textPosition = 'CENTER'; // 'LEFT', 'RIGHT', 'CENTER'
 
 // TODO: Poprawić
 const textureWidth = '180';
@@ -103,14 +107,28 @@ opentype.load(fontPath, (err, font) => {
     
     // =======
     // Wyrównanie do prawej strony
-    const maxWidth = Math.max(...linesData.map(({lineTextWidth}) => lineTextWidth));
-    for (const lineData of linesData) {
-        const difference = maxWidth - lineData.lineTextWidth;
-        if (difference === 0) {
-            continue;
+    if (textPosition !== 'LEFT') {
+        const maxWidth = Math.max(...linesData.map(({lineTextWidth}) => lineTextWidth));
+        for (const lineData of linesData) {
+            const difference = maxWidth - lineData.lineTextWidth;
+            if (difference === 0) {
+                continue;
+            }
+
+            let translationX;
+            switch (textPosition) {
+                case 'RIGHT':
+                    translationX = difference;
+                    break;
+                case 'CENTER':
+                    translationX = difference/2;
+                    break;
+            }
+
+            lineData.group.setAttribute('transform',`translate(${translationX},0)`);
         }
-        lineData.group.setAttribute('transform',`translate(${difference},0)`);
     }
+    
     // =======
 
     const svgContainer = document.createElement("div");
