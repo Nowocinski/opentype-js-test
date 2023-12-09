@@ -74,7 +74,7 @@ opentype.load(fontPath, (err, font) => {
     // svgElement.setAttribute('height', fontSize.toString());
 
     let lineNumber = 0;
-    const paths = [];
+    const linesData = [];
     const linesOfText = text.split('\n');
     for (const lineOfText of linesOfText) {
         let lineTextWidth = 0;
@@ -84,7 +84,6 @@ opentype.load(fontPath, (err, font) => {
             const glyph = font.charToGlyph(char);
             const pathData = glyph.getPath(lineTextWidth, fontSize * (lineNumber - 1), fontSize);
             const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            paths.push(svgPath);
             svgPath.setAttribute('d', pathData.toPathData());
             svgPath.setAttribute('fill', `url(#${myPattern})`);
             // https://stackoverflow.com/questions/18580389/svg-transparent-background-web
@@ -96,7 +95,23 @@ opentype.load(fontPath, (err, font) => {
 
         svgElement.appendChild(group);
         lineNumber++;
+        linesData.push({
+            group,
+            lineTextWidth
+        });
     }
+    
+    // =======
+    // Wyrównanie do prawej strony
+    const maxWidth = Math.max(...linesData.map(({lineTextWidth}) => lineTextWidth));
+    for (const lineData of linesData) {
+        const difference = maxWidth - lineData.lineTextWidth;
+        if (difference === 0) {
+            continue;
+        }
+        lineData.group.setAttribute('transform',`translate(${difference},0)`);
+    }
+    // =======
 
     const svgContainer = document.createElement("div");
     svgContainer.id = "svg-container"
