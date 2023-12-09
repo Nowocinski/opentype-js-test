@@ -2,15 +2,17 @@ import opentype from "opentype.js";
 
 // Ścieżka do pliku TTF
 const fontPath = '../fonts/Comic Sans MS Bold.ttf';
+const fontSize = 72;
+const text = `12 abcdef`;
+
+const textureWidth = '150';
+const textureHeight = '100';
 
 opentype.load(fontPath, (err, font) => {
     if (err) {
         console.error('Błąd podczas wczytywania czcionki:', err);
         return;
     }
-
-    const fontSize = 72;
-    const text = 'aabbccdd';
 
     // Oblicz szerokość całego tekstu
     let totalWidth = 0;
@@ -33,8 +35,8 @@ opentype.load(fontPath, (err, font) => {
         // Dodaj dodatkowe atrybuty (jeśli są potrzebne)
         svgImg.setAttribute('x', '0');
         svgImg.setAttribute('y', '0');
-        svgImg.setAttribute('width', '100');
-        svgImg.setAttribute('height', '100');
+        svgImg.setAttribute('width', textureWidth);
+        svgImg.setAttribute('height', textureHeight);
 
         return svgImg;
     };
@@ -49,8 +51,8 @@ opentype.load(fontPath, (err, font) => {
         svgPattern.setAttribute('id', myPattern); // Ustaw unikalne ID dla wzoru
         svgPattern.setAttribute('x', '0'); // Pozycja X wzoru
         svgPattern.setAttribute('y', '0'); // Pozycja Y wzoru
-        svgPattern.setAttribute('width', '100'); // Szerokość wzoru
-        svgPattern.setAttribute('height', '100'); // Wysokość wzoru
+        svgPattern.setAttribute('width', textureWidth); // Szerokość wzoru
+        svgPattern.setAttribute('height', textureHeight); // Wysokość wzoru
         svgPattern.setAttribute('patternUnits', 'userSpaceOnUse'); // Jednostki dla wzoru
 
         // Dodaj utworzony obraz do obiektu SVGPatternElement
