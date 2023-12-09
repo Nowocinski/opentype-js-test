@@ -2,7 +2,7 @@ import opentype from "opentype.js";
 
 // Ścieżka do pliku TTF
 const fontPath = '../fonts/Comic Sans MS Bold.ttf';
-const fontSize = 72;
+const fontSize = 72; // TODO: Bez znaczenia :/
 const text = `æåÂÆ
 123`;
 
@@ -96,6 +96,7 @@ opentype.load(fontPath, (err, font) => {
 
     const svgContainer = document.createElement("div");
     svgContainer.id = "svg-container"
+    svgContainer.style = "width: 50%"; // TODO: Poprawić
 
     // dodanie ramki
     svgElement.setAttribute("style", "border:1px dashed red")
