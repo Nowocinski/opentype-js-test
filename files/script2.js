@@ -43,7 +43,7 @@ opentype.load(fontPath, (err, font) => {
         return svgImg;
     };
     const svgImage = createSvgImage();
-    
+
     const myPattern = 'myPattern';
     const createSvgPattern = (svgImg) => {
         // Utwórz obiekt SVGPatternElement
@@ -59,14 +59,14 @@ opentype.load(fontPath, (err, font) => {
 
         // Dodaj utworzony obraz do obiektu SVGPatternElement
         svgPattern.appendChild(svgImage);
-        
+
         return svgPattern;
     };
-    
+
     const svgPattern = createSvgPattern(svgImage);
 
     // ----------------------------
-    
+
     // Utwórz obiekt SVG o dostosowanych wymiarach
     const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svgElement.appendChild(svgPattern);
@@ -76,22 +76,27 @@ opentype.load(fontPath, (err, font) => {
     let lineTextWidth = 0;
     let lineNumber = 1; // from 1
     const paths = [];
-    for (const char of text) {
-        if (char === '\n') { // jeśli enter
-            lineNumber++;
-            lineTextWidth = 0;
-            continue;
+    const linesOfText = text.split('\n');
+    for (const lineOfText of linesOfText) {
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.id = `line-number-${lineNumber}`;
+        for (const char of lineOfText) {
+            const glyph = font.charToGlyph(char);
+            const pathData = glyph.getPath(lineTextWidth, fontSize * lineNumber, fontSize);
+            const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            paths.push(svgPath);
+            svgPath.setAttribute('d', pathData.toPathData());
+            svgPath.setAttribute('fill', `url(#${myPattern})`);
+            // https://stackoverflow.com/questions/18580389/svg-transparent-background-web
+            // svgPath.setAttribute('fill',"none");
+            // svgElement.appendChild(svgPath);
+            lineTextWidth += glyph.advanceWidth * (fontSize / font.unitsPerEm);
+            group.appendChild(svgPath);
         }
-        const glyph = font.charToGlyph(char);
-        const pathData = glyph.getPath(lineTextWidth, fontSize * lineNumber, fontSize);
-        const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        paths.push(svgPath);
-        svgPath.setAttribute('d', pathData.toPathData());
-        svgPath.setAttribute('fill', `url(#${myPattern})`);
-        // https://stackoverflow.com/questions/18580389/svg-transparent-background-web
-        // svgPath.setAttribute('fill',"none");
-        svgElement.appendChild(svgPath);
-        lineTextWidth += glyph.advanceWidth * (fontSize / font.unitsPerEm);
+
+        svgElement.appendChild(group);
+        lineNumber++;
+        lineTextWidth = 0;
     }
 
     const svgContainer = document.createElement("div");
@@ -100,7 +105,7 @@ opentype.load(fontPath, (err, font) => {
 
     // dodanie ramki
     svgElement.setAttribute("style", "border:1px dashed red")
-    
+
     svgContainer.appendChild(svgElement);
     // svgContainer.style.border = "1px dashed red";
     document.body.appendChild(svgContainer);
