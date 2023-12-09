@@ -153,10 +153,13 @@ const createText = async () => {
 };
 
 document.addEventListener('keydown', async ({key}) => {
-    if (key.length > 1) {
+    if (key.length === 1) {
+        text = `${text}${key}`;
+    } else if (key === 'Backspace') {
+        text = text.slice(0, -1);
+    } else {
         return;
     }
-    text = `${text}${key}`;
 
     const oldTextContainer = document.getElementById(svgContainerName);
     if (oldTextContainer) {
