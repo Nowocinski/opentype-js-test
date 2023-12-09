@@ -136,7 +136,11 @@ const createText = async () => {
 
     const svgContainer = document.createElement("div");
     svgContainer.id = svgContainerName;
-    svgContainer.style = "width: 50%; margin: 0 auto; transform: translateY(20%);"; // TODO: Poprawić
+    svgContainer.style = `
+    margin: 0 auto;
+    padding-left: min(80px, 10%);
+    padding-right: min(80px, 10%);
+    padding-top: min(80px, 10%);`; // TODO: Poprawić
 
     // dodanie ramki
     svgElement.setAttribute("style", "border:1px dashed red")
