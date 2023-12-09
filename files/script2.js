@@ -73,7 +73,7 @@ opentype.load(fontPath, (err, font) => {
     // svgElement.setAttribute('width', totalWidth.toString());
     // svgElement.setAttribute('height', fontSize.toString());
 
-    let lineNumber = 1; // from 1
+    let lineNumber = 0;
     const paths = [];
     const linesOfText = text.split('\n');
     for (const lineOfText of linesOfText) {
@@ -82,7 +82,7 @@ opentype.load(fontPath, (err, font) => {
         group.id = `line-number-${lineNumber}`;
         for (const char of lineOfText) {
             const glyph = font.charToGlyph(char);
-            const pathData = glyph.getPath(lineTextWidth, fontSize * lineNumber, fontSize);
+            const pathData = glyph.getPath(lineTextWidth, fontSize * (lineNumber - 1), fontSize);
             const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             paths.push(svgPath);
             svgPath.setAttribute('d', pathData.toPathData());
