@@ -28,7 +28,7 @@ opentype.load(fontPath, (err, font) => {
         svgImg.setAttributeNS(
             'http://www.w3.org/1999/xlink',
             'href',
-            'https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg');
+            '645188.jpg');
 
         // Dodaj dodatkowe atrybuty (jeśli są potrzebne)
         svgImg.setAttribute('x', '0');
