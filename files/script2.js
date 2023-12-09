@@ -77,8 +77,7 @@ opentype.load(fontPath, (err, font) => {
     let lineNumber = 1; // from 1
     const paths = [];
     for (const char of text) {
-        if (char === '\n') {
-            console.log('enter');
+        if (char === '\n') { // jeśli enter
             lineNumber++;
             lineTextWidth = 0;
             continue;
