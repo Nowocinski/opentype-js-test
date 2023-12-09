@@ -73,11 +73,11 @@ opentype.load(fontPath, (err, font) => {
     // svgElement.setAttribute('width', totalWidth.toString());
     // svgElement.setAttribute('height', fontSize.toString());
 
-    let lineTextWidth = 0;
     let lineNumber = 1; // from 1
     const paths = [];
     const linesOfText = text.split('\n');
     for (const lineOfText of linesOfText) {
+        let lineTextWidth = 0;
         const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         group.id = `line-number-${lineNumber}`;
         for (const char of lineOfText) {
@@ -96,7 +96,6 @@ opentype.load(fontPath, (err, font) => {
 
         svgElement.appendChild(group);
         lineNumber++;
-        lineTextWidth = 0;
     }
 
     const svgContainer = document.createElement("div");
