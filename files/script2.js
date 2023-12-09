@@ -3,28 +3,31 @@ import opentype from "opentype.js";
 // Ścieżka do pliku TTF
 const fontPath = '../fonts/Comic Sans MS Bold.ttf';
 const fontSize = 72; // TODO: Bez znaczenia :/
-const text = `
-
-
-123
-æÃÆ`; // TODO: Poprawić pustę spację
+let text = ``; // TODO: Poprawić pustę spację
 const textPosition = 'CENTER'; // 'LEFT', 'RIGHT', 'CENTER'
 
 // TODO: Poprawić
 const textureWidth = '180';
 const textureHeight = '100';
 
-opentype.load(fontPath, (err, font) => {
-    if (err) {
-        console.error('Błąd podczas wczytywania czcionki:', err);
-        return;
-    }
+let font;
+const svgContainerName = 'svg-container';
 
-    // Oblicz szerokość całego tekstu
-    let totalWidth = 0;
-    for (const char of text) {
-        const glyph = font.charToGlyph(char);
-        totalWidth += glyph.advanceWidth * (fontSize / font.unitsPerEm);
+const loadFont = async () => {
+    await opentype.load(fontPath, (err, loadedFont) => {
+        if (err) {
+            throw new Error('Błąd podczas wczytywania czcionki:', err);
+        }
+
+        console.info('Czcionka została wczytana!');
+        font = loadedFont;
+    });
+};
+
+
+const createText = async () => {
+    if (!font) {
+        await loadFont();
     }
 
     // ----------------------------
@@ -104,7 +107,7 @@ opentype.load(fontPath, (err, font) => {
             lineTextWidth
         });
     }
-    
+
     // =======
     // Wyrównanie do prawej strony
     if (textPosition !== 'LEFT') {
@@ -121,18 +124,18 @@ opentype.load(fontPath, (err, font) => {
                     translationX = difference;
                     break;
                 case 'CENTER':
-                    translationX = difference/2;
+                    translationX = difference / 2;
                     break;
             }
 
-            lineData.group.setAttribute('transform',`translate(${translationX},0)`);
+            lineData.group.setAttribute('transform', `translate(${translationX},0)`);
         }
     }
-    
+
     // =======
 
     const svgContainer = document.createElement("div");
-    svgContainer.id = "svg-container"
+    svgContainer.id = svgContainerName;
     svgContainer.style = "width: 50%; margin: 0 auto; transform: translateY(20%);"; // TODO: Poprawić
 
     // dodanie ramki
@@ -147,4 +150,20 @@ opentype.load(fontPath, (err, font) => {
     // console.log("bbox", bbox);
     const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(" ");
     svgElement.setAttribute("viewBox", viewBox);
+};
+
+document.addEventListener('keydown', async ({key}) => {
+    if (key.length > 1) {
+        return;
+    }
+    text = `${text}${key}`;
+
+    const oldTextContainer = document.getElementById(svgContainerName);
+    if (oldTextContainer) {
+        document.body.removeChild(oldTextContainer);
+    }
+    
+    await createText();
 });
+
+await loadFont();
