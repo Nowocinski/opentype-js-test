@@ -157,7 +157,10 @@ document.addEventListener('keydown', async ({key}) => {
         text = `${text}${key}`;
     } else if (key === 'Backspace') {
         text = text.slice(0, -1);
+    } else if (key === 'Enter') {
+        text = `${text}\n`;
     } else {
+        console.log(key);
         return;
     }
 
