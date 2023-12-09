@@ -3,9 +3,10 @@ import opentype from "opentype.js";
 // Ścieżka do pliku TTF
 const fontPath = '../fonts/Comic Sans MS Bold.ttf';
 const fontSize = 72;
-const text = `12 abcdef`;
+const text = `æåÂÆ`;
 
-const textureWidth = '150';
+// TODO: Poprawić
+const textureWidth = '180';
 const textureHeight = '100';
 
 opentype.load(fontPath, (err, font) => {
