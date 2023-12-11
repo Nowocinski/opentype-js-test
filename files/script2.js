@@ -5,6 +5,7 @@ const fontPath = '../fonts/Comic Sans MS Bold.ttf';
 const fontSize = 72; // TODO: Bez znaczenia :/
 let text = ``; // TODO: Poprawić pustę spację
 const textPosition = 'CENTER'; // 'LEFT', 'RIGHT', 'CENTER'
+const interligne = 0;
 
 // TODO: Poprawić
 const textureWidth = '180';
@@ -154,8 +155,6 @@ const createText = async () => {
     // console.log("bbox", bbox);
     const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(" ");
     svgElement.setAttribute("viewBox", viewBox);
-    
-    console.log(bbox.width, bbox.height);
 };
 
 document.addEventListener('keydown', async ({key}) => {
