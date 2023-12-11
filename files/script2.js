@@ -93,7 +93,7 @@ const createText = async () => {
             const glyph = font.charToGlyph(char);
             const pathData = glyph.getPath(
                 lineTextWidth,
-                fontSize * interligne * (lineNumber - 1),
+                fontSize * interligne * lineNumber,
                 fontSize / spaceBetweenLetters
             );
             const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
