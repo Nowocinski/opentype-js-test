@@ -6,6 +6,7 @@ const fontSize = 72; // TODO: Bez znaczenia :/
 let text = ``; // TODO: Poprawić pustę spację
 const textPosition = 'CENTER'; // 'LEFT', 'RIGHT', 'CENTER'
 const interligne = 0;
+const spaceBetweenLetters = 2;
 
 // TODO: Poprawić
 const textureWidth = '180';
@@ -90,7 +91,11 @@ const createText = async () => {
         group.id = `line-number-${lineNumber}`;
         for (const char of lineOfText) {
             const glyph = font.charToGlyph(char);
-            const pathData = glyph.getPath(lineTextWidth, fontSize * (lineNumber - 1), fontSize);
+            const pathData = glyph.getPath(
+                lineTextWidth,
+                fontSize * (lineNumber - 1),
+                fontSize / spaceBetweenLetters
+            );
             const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             svgPath.setAttribute('d', pathData.toPathData());
             svgPath.setAttribute('fill', `url(#${myPattern})`);
