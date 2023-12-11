@@ -5,7 +5,7 @@ const fontPath = '../fonts/Comic Sans MS Bold.ttf';
 const fontSize = 72; // TODO: Bez znaczenia :/
 let text = ``; // TODO: Poprawić pustę spację
 const textPosition = 'CENTER'; // 'LEFT', 'RIGHT', 'CENTER'
-const interligne = 0;
+const interligne = 2; // min: 1; max: 24
 const spaceBetweenLetters = 1; // min: 1; max: 24
 
 // TODO: Poprawić
@@ -93,7 +93,7 @@ const createText = async () => {
             const glyph = font.charToGlyph(char);
             const pathData = glyph.getPath(
                 lineTextWidth,
-                fontSize * (lineNumber - 1),
+                fontSize * interligne * (lineNumber - 1),
                 fontSize / spaceBetweenLetters
             );
             const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
