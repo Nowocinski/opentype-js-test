@@ -6,7 +6,7 @@ const fontSize = 72; // TODO: Bez znaczenia :/
 let text = ``; // TODO: Poprawić pustę spację
 const textPosition = 'CENTER'; // 'LEFT', 'RIGHT', 'CENTER'
 const interligne = 0;
-const spaceBetweenLetters = 2;
+const spaceBetweenLetters = 1; // min: 1; max: 24
 
 // TODO: Poprawić
 const textureWidth = '180';
